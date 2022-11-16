@@ -1,0 +1,58 @@
+<detalle-cliente *ngIf="clienteSeleccionado" [cliente]="clienteSeleccionado"></detalle-cliente>
+
+<div class="card border-primary mb-3 mt-3">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-md-6">
+        Clientes
+      </div>
+      <div class="col-md-6">
+        <button class="btn btn-success btn-block w-100" type="button" [routerLink]="['/clientes/form']">Crear Cliente</button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body text-primary">
+    <h5 class="card-title">Listado de clientes</h5>
+    <div *ngIf="clientes?.length == 0" class="alert alert-danger">
+      <h5 class="text-danger align-center">Sin registros!</h5>
+    </div>
+    <table class="table table-bordered table-striped" *ngIf="clientes?.length > 0">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Email</th>
+          <th>Fecha</th>
+          <th>Region</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes">
+          <td>
+            <img (click)="abriModal(cliente)" width="60px" *ngIf="cliente?.foto" src="http://localhost:9999/api/uploads/img/{{ cliente.foto }}" style="cursor: pointer;">
+
+            <img (click)="abriModal(cliente)" width="60px" *ngIf="!cliente?.foto" src="http://localhost:9999/images/no-user.jpg" style="cursor: pointer;" alt="Aqui deeia ir al foto">
+
+          </td>
+          <td>{{ cliente.nombre }}</td>
+          <td>{{ cliente.apellido | uppercase }}</td>
+          <td>{{ cliente.email }}</td>
+          <td>{{ cliente.createAt | date:"EEEE dd, MMMM yyyy" }}</td>
+          <td>
+            {{ cliente.region.nombre }}
+          </td>
+          <td>
+            <button class="btn btn-warning btn-sm" type="button" name="editar" [routerLink]="['/clientes/form', cliente.id]">Editar</button>
+          </td>
+          <td>
+            <button class="btn btn-danger btn-sm" type="button" name="elimina" (click)="delete(cliente)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <paginator-nav *ngIf="paginador" [paginador] = "paginador"></paginator-nav>
+  </div>
+</div>

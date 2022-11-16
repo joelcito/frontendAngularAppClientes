@@ -1,0 +1,18 @@
+<!-- <button class="btn btn-{{ (habilitar)? 'danger' : 'success' }} my-3" (click)="habilitar = (habilitar)? false : true">{{ (habilitar)? 'Ocultar':'Mostrar' }}</button> -->
+<button class="btn btn-{{ (habilitar)? 'danger' : 'success' }} my-3" (click)="setHabilitar()">{{ (habilitar)? 'Ocultar':'Mostrar' }}</button>
+
+<div class="card">
+  <div class="card-header">
+    Listado de Curso
+  </div>
+  <!-- <table class="table table-hover">
+    <tbody>
+      <tr *ngFor="let curso of listaCurso">
+        <td>{{ curso }}</td>
+      </tr>
+    </tbody>
+  </table> -->
+  <ul class="list-group" *ngIf="habilitar">
+    <li class="list-group-item" *ngFor="let curso of listaCurso">{{ curso }}</li>
+  </ul>
+</div>

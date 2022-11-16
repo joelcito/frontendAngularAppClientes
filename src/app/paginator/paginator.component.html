@@ -1,0 +1,26 @@
+<ul class="pagination" *ngIf="paginas?.length > 0" style="overflow: scroll;">
+
+  <li class="page-item" [ngClass]="paginador.first?'disabled':''">
+    <a  class="page-link" [routerLink]="['/clientes/page',0]">Primero</a>
+  </li>
+
+  <!-- *ngIf="!paginador.first" -->
+  <li class="page-item" [ngClass]="paginador.first?'disabled':''">
+    <a  class="page-link" [routerLink]="['/clientes/page',paginador.number-1]">&laquo; Ant</a>
+  </li>
+
+  <li class="page-item" *ngFor="let numeroPag of paginas" [ngClass]="numeroPag-1 == paginador.number?'active' :''">
+    <!-- <span *ngIf="numeroPag-1 == paginador.number">{{ numeroPag }}</span> -->
+    <a class="page-link" [routerLink]="['/clientes/page',numeroPag-1]">{{ numeroPag }}</a>
+  </li>
+
+  <!-- *ngIf="!paginador.last" -->
+  <li class="page-item" [ngClass]="paginador.last?'disabled':''" >
+    <a  class="page-link" [routerLink]="['/clientes/page',paginador.number+1]">Sig &raquo;</a>
+  </li>
+
+  <li class="page-item" [ngClass]="paginador.last?'disabled':''">
+    <a  class="page-link" [routerLink]="['/clientes/page',paginador.totalPages-1]">Ultimo</a>
+  </li>
+
+</ul>

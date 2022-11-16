@@ -1,0 +1,72 @@
+<ul class="alert alert-danger" *ngIf="errores?.length > 0">
+  <li *ngFor="let err of errores">{{ err }}</li>
+</ul>
+<div class="card bf-dark text-white mt-3">
+  <div class="card-header">{{ titulo }}</div>
+  <div class="card-body">
+    <form #formularioCliente="ngForm">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="">Nombre</label>
+            <input type="text" class="form-control" autocomplete="off" placeholder="Nombre..." [(ngModel)]="cliente.nombre" name="nombre" #nombre="ngModel"> <!--   required minlength="4" -->
+            <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+              <small class="text-danger" *ngIf="nombre.errors.required">El nombre es requerido</small>
+              <small class="text-danger" *ngIf="nombre.errors.minlength">El nombre no puede tener menos de 4 caracteres</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="">Apellido</label>
+            <input type="text" class="form-control" placeholder="Apellido..." [(ngModel)]="cliente.apellido" name="apellido"  #apellido="ngModel"> <!--   required minlength="4" -->
+            <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
+              <small *ngIf="apellido.errors.required" class="text-danger">El campo apellido es obligatorio</small>
+              <small *ngIf="apellido.errors.minlength" class="text-danger">El campo apelliedo debe al menos caracteres </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="">Email</label>
+            <input type="emil" class="form-control" placeholder="Email" [(ngModel)]="cliente.email" name="email" #email="ngModel"> <!--   required email -->
+            <div *ngIf="email.invalid && (email.dirty || email.touched)">
+              <small *ngIf="email.errors.required" class="text-danger">El campo email es obligatorio</small>
+            <small *ngIf="email.errors.email" class="text-danger">El campo email debe un formato de correo </small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="createAt">Fecha</label>
+            <input type="date" class="form-control" placeholder="Fecha de creacion" [(ngModel)]="cliente.createAt" name="createAt"> <!--   required email -->
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="region">Region</label>
+              <select [compareWith]="compararRegion" class="select form-control" [(ngModel)]="cliente.region" name="region">
+                <option [ngValue]="undefined">Selecciona la region </option>
+                <option [ngValue]="region" *ngFor="let region of regiones">{{ region.nombre }}</option>
+              </select>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-6">
+          <button class="btn btn-success btn-block w-100" (click)="create()" *ngIf="!cliente.id else elseBlock" [disabled]="!formularioCliente.form.valid">Guardar</button>
+          <ng-template #elseBlock>
+            <button class="btn btn-success btn-block w-100" (click)="udDate ()">Editar</button>
+          </ng-template>
+        </div>
+        <div class="col-md-6">
+          <button class="btn btn-dark btn-block w-100" type="button" [routerLink]="['/clientes']">Volver</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
